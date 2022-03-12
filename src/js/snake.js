@@ -177,3 +177,7 @@ document.addEventListener("keydown", function (event) {
     if (event.key === "i") return snake3.direction = DIRECTION.UP;
     if (event.key === "k") return snake3.direction = DIRECTION.DOWN;
 })
+
+move(snake1);
+move(snake2);
+move(snake3);
