@@ -1,0 +1,20 @@
+{
+  "name": "se-fe4-kelompok7",
+  "version": "1.0.0",
+  "description": "Package For Snake Game",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rg-km/se-fe4-kelompok7.git"
+  },
+  "keywords": [],
+  "author": "Aditya Rizqi Ardhana",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rg-km/se-fe4-kelompok7/issues"
+  },
+  "homepage": "https://github.com/rg-km/se-fe4-kelompok7#readme"
+}
