@@ -80,11 +80,18 @@ function draw() {
         let snakeCanvas = document.getElementById("snakeBoard");
         let ctx = snakeCanvas.getContext("2d");
 
+        // Get Element Apple
+        let appleImg = document.getElementById('apple_icon');
+
         ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
         
         drawCell(ctx, snake1.position.x, snake1.position.y, snake1.color);
         drawCell(ctx, snake2.position.x, snake2.position.y, snake2.color);
         drawCell(ctx, snake3.position.x, snake3.position.y, snake3.color);
+        
+        // Draw Apple With Image
+        ctx.drawImage(appleImg, apple1.position.x * CELL_SIZE, apple1.position.y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+        ctx.drawImage(appleImg, apple2.position.x * CELL_SIZE, apple2.position.y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
 
     }, REDRAW_INTERVAL);
 }
