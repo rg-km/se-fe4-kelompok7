@@ -2,16 +2,55 @@
 <html>
     <head>
         <title>Snake Game Board</title>
+        <link rel="stylesheet" href="./src/css/snake.css">
     </head>
     <body onload="draw();">
-        <h1>Snake</h1>
-
-        <!-- Number 1 -->
-        <img id="apple_icon" style="display: none;" src="./asset/images/apple.png" alt="Apple">
-        <canvas id="snakeBoard" width="400" height="400" style="border:1px solid #000000;"></canvas>
-        <canvas id="score1Board" width="100" height="100" style="border:1px solid #000000;"></canvas>
-        <canvas id="score2Board" width="100" height="100" style="border:1px solid #000000;"></canvas>
-        <canvas id="score3Board" width="100" height="100" style="border:1px solid #000000;"></canvas>
+        <div id="snake-wrapper">
+            <h1>Snake</h1>
+            <div id="indicator-component">
+                <div id="indicator-board">
+                    <div id="life-wrapper">
+                        <div id="life-child">
+                        </div>
+                    </div>
+                    <div id="score-level-wrapper">
+                        <div id="score-wrapper">
+                            <div>Score : <span id="child-score"></span></div>
+                        </div>
+                        <div id="level-wrapper">
+                            <div id="child-level">Level <span class="level-number">0</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="board-component">
+                <img id="life_icon" style="display: none;" src="./asset/images/heart.png" alt="Life">
+                <img id="apple_icon" style="display: none;" src="./asset/images/apple.png" alt="Apple">
+                <div id="board-wrapper">
+                    <div id="snake-board">
+                        <canvas id="snakeBoard" width="400" height="400" style="border:1px solid #000000;"></canvas>
+                    </div>
+                    <div id="indicator-2-board">
+                        <div id="player-wrapper">
+                            <div id="player-child">
+                                Aditya Rizqi Ardhana
+                            </div>
+                        </div>
+                        <div id="love-wrapper">
+                            <div id="child-love">                
+                                <img id="life_icon" width="15" src="./asset/images/heart.png" alt="Life">
+                                <span class="love-number">0</span>
+                            </div>
+                        </div>
+                    </div>    
+                    <div id="score-board">                    
+                        <canvas id="score1Board" width="100" height="100" style="border:1px solid #000000;"></canvas>
+                        <canvas id="score2Board" width="100" height="100" style="border:1px solid #000000;"></canvas>
+                        <canvas id="score3Board" width="100" height="100" style="border:1px solid #000000;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 
     <script type="text/javascript" src="./src/js/snake.js"></script>
