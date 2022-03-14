@@ -2,20 +2,35 @@ const CELL_SIZE = 20;
 const CANVAS_SIZE = 400;
 
 //made faster
-const REDRAW_INTERVAL = 50;
+const REDRAW_INTERVAL = 0;
+
+// Size Width and Height
 const WIDTH = CANVAS_SIZE / CELL_SIZE;
 const HEIGHT = CANVAS_SIZE / CELL_SIZE;
 
+// Draw DOM
+function dom(element) {
+    return document.querySelector(element)
+}
+
 // Get Element Life
+// let lifeAppleNode = document.querySelectorAll(".img-apple");
 let lifeCanvas = document.getElementById('life_icon');
-let lifeHtml = document.querySelector('#life-child');
-let lifeAppleNode = document.querySelectorAll(".img-apple");
-let lifeEathMax = document.querySelector(".love-number");
+let lifeHtml = dom('#life-child');
+let lifeEathMax = dom('.love-number');
 let lengthHealth = [];
 let eatHealth = 0;
+let eatHealthMax = [];
 
 // Get Element Score
-let scoreHtml = document.querySelector("#child-score");
+let scoreHtml = dom('#child-score');
+let scoreInit = [];
+
+// Get Element Speed
+let speedHtml = dom('.speed-number');
+
+// Get Element Speed
+let levelHtml = dom('.level-number');
 
 //this
 const DIRECTION = {
@@ -25,7 +40,7 @@ const DIRECTION = {
     DOWN: 3,
 }
 
-const MOVE_INTERVAL = 150;
+let MOVE_INTERVAL = 150;
 
 function initPosition() {
     return {
@@ -39,22 +54,10 @@ function initDirection() {
 }
 
 let snake1 = {
+    score: 0,
     color: "purple",
     position: initPosition(),
     direction: initDirection(),
-    score: 0,
-}
-let snake2 = {
-    color: "blue",
-    position: initPosition(),
-    direction: initDirection(),
-    score: 0,
-}
-let snake3 = {
-    color: "orange",
-    position: initPosition(),
-    direction: initDirection(),
-    score: 0,
 }
 let apple1 = {
     position: initPosition(),
@@ -62,35 +65,12 @@ let apple1 = {
 let apple2 = {
     position: initPosition(),
 }
-
 let life = {
     position: initPosition(),
 }
 
-function drawCell(ctx, x, y, color) {
-    ctx.fillStyle = color;
-    ctx.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-}
-
-function drawScore(snake) {
-    let scoreCanvas;
-    let tempScore = snake.score;
-
-    scoreHtml.textContent = tempScore;
-
-    if (snake.color == snake1.color) {
-        scoreCanvas = document.getElementById("score1Board");
-    } else if(snake.color == snake2.color) {
-        scoreCanvas = document.getElementById("score2Board");
-    } else {
-        scoreCanvas = document.getElementById("score3Board");
-    }
-    let scoreCtx = scoreCanvas.getContext("2d");
-
-    scoreCtx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
-    scoreCtx.font = "30px Arial";
-    scoreCtx.fillStyle = snake.color
-    scoreCtx.fillText(snake.score, 10, scoreCanvas.scrollHeight / 2);
+let level = {
+    point: 0
 }
 
 let isPrime = (value, object) => {
@@ -98,25 +78,64 @@ let isPrime = (value, object) => {
     if (value === 1) {
             return false
     } else if (value === 2) {
-        object.drawImage(lifeCanvas, life.position.x * CELL_SIZE, life.position.y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+        object.drawImage(lifeCanvas, life.position.x * CELL_SIZE, life.position.y * CELL_SIZE, CELL_SIZE+20, CELL_SIZE+20)
     } else {
         for(let index = 2; index < value; index++) {
             if(value % index === 0) {
                 return false
             }
-            object.drawImage(lifeCanvas, life.position.x * CELL_SIZE, life.position.y * CELL_SIZE, CELL_SIZE, CELL_SIZE)    
+            object.drawImage(lifeCanvas, life.position.x * CELL_SIZE, life.position.y * CELL_SIZE, CELL_SIZE+20, CELL_SIZE+20)    
         }
     }
+}
+
+function speed(value=150) {
+    MOVE_INTERVAL = value;
+    speedHtml.textContent = value + "ms";
+}
+
+function levelUp(value) {
+    if(value.length >= 0 && value.length < 5) {
+        levelHtml.textContent = 0;
+        speed(150);
+    } else if(value.length >= 5 && value.length < 10) {
+        levelHtml.textContent = 1;
+        speed(120);
+    } else if (value.length >= 10 && value.length < 15) {
+        levelHtml.textContent = 2;
+        speed(90);
+    } else if (value.length >= 15 && value.length < 20) {
+        levelHtml.textContent = 3;
+        speed(60);
+    } else if (value.length >= 20 && value.length < 25) {
+        levelHtml.textContent = 4;
+        speed(40);
+    } else if (value.length >= 25 && value.length <= 30) {
+        levelHtml.textContent = 5;
+        speed(20);
+    } else if (value.length === 30) {
+        alert("Hurrayy, You WIN !")
+        alert(`Total Score : ${scoreInit.length} \n\n Nyawa yang dimakan : ${eatHealthMax.length} Nyawa`)
+    }
+}
+
+function drawObject(object=0, img=0, x, y) {
+    object.drawImage(img, x.position.x * CELL_SIZE, y.position.y * CELL_SIZE, CELL_SIZE+20, CELL_SIZE+20)
+}
+
+function drawScore(snake) {
+    let tempScore = snake.score;
+    scoreHtml.textContent = tempScore;    
 }
 
 function createLifeImage(value, limit) {
 
     function nodeLife() {
         let pathImg = document.createElement('img');
-        pathImg.src = "../../asset/images/heart.png";
         pathImg.width = "25";
         pathImg.style.marginRight = "5px"
         pathImg.classList.add("img-apple")
+        pathImg.src = "../../asset/images/heart.png";
         return pathImg;
     }
 
@@ -126,6 +145,9 @@ function createLifeImage(value, limit) {
 }
 
 function draw() {
+
+    // Get Element Snake
+    let snakeImg = document.getElementById('snake_icon');
 
     // Get Element Apple
     let appleImg = document.getElementById('apple_icon');
@@ -139,22 +161,17 @@ function draw() {
         ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
         
         // Draw Snake
-        drawCell(ctx, snake1.position.x, snake1.position.y, snake1.color);
-        drawCell(ctx, snake2.position.x, snake2.position.y, snake2.color);
-        drawCell(ctx, snake3.position.x, snake3.position.y, snake3.color);
+        drawObject(ctx, snakeImg, snake1, snake1)
         
         // Draw Apple With Image
-        ctx.drawImage(appleImg, apple1.position.x * CELL_SIZE, apple1.position.y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
-        ctx.drawImage(appleImg, apple2.position.x * CELL_SIZE, apple2.position.y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+        ctx.drawImage(appleImg, apple1.position.x * CELL_SIZE, apple1.position.y * CELL_SIZE, CELL_SIZE+20, CELL_SIZE+20)
+        ctx.drawImage(appleImg, apple2.position.x * CELL_SIZE, apple2.position.y * CELL_SIZE, CELL_SIZE+20, CELL_SIZE+20)
 
         // Draw Score
         drawScore(snake1);
-        drawScore(snake2);
-        drawScore(snake3);
-
-
+        
         isPrime(snake1.score, ctx)
-
+        
     }, REDRAW_INTERVAL);
 }
 
@@ -173,25 +190,31 @@ function teleport(snake) {
     }
 }
 
-function eat(snake, apple1, apple2,life ) {
+function eat(snake, apple1, apple2, life ) {
     if (snake.position.x == apple1.position.x && snake.position.y == apple1.position.y ) {
         apple1.position = initPosition();
         snake.score++;
+        scoreInit.push(1)
+        levelUp(scoreInit);
     } else if(snake.position.x == apple2.position.x && snake.position.y == apple2.position.y) {
         apple2.position = initPosition();
         snake.score++;
+        scoreInit.push(2)
+        levelUp(scoreInit);
     } else if (snake.position.x == life.position.x && snake.position.y == life.position.y) {
         life.position = initPosition();
-        snake.score+=1;
-        lifeEathMax.textContent = eatHealth+=1;
+        snake.score++;        
+        scoreInit.push(3)
+        levelUp(scoreInit);
 
+        eatHealth+=1;
+        lifeEathMax.textContent = eatHealthMax.push(eatHealth);
         if(lengthHealth.length > 5) {
             delete lengthHealth[7]
         } else {
             lengthHealth.push(createLifeImage(0,1))
-            console.log(lengthHealth);
-        }
-    }
+        }       
+    } 
 }
 
 function moveLeft(snake) {
@@ -244,21 +267,8 @@ document.addEventListener("keydown", function (event) {
     if (event.key === "ArrowRight") return snake1.direction = DIRECTION.RIGHT;
     if (event.key === "ArrowUp") return snake1.direction = DIRECTION.UP;
     if (event.key === "ArrowDown") return snake1.direction = DIRECTION.DOWN;
-
-    if (event.key === "a") return snake2.direction = DIRECTION.LEFT;
-    if (event.key === "d") return snake2.direction = DIRECTION.RIGHT;
-    if (event.key === "w") return snake2.direction = DIRECTION.UP;
-    if (event.key === "s") return snake2.direction = DIRECTION.DOWN;
-
-
-    if (event.key === "j") return snake3.direction = DIRECTION.LEFT;
-    if (event.key === "l") return snake3.direction = DIRECTION.RIGHT;
-    if (event.key === "i") return snake3.direction = DIRECTION.UP;
-    if (event.key === "k") return snake3.direction = DIRECTION.DOWN;
 })
 
 move(snake1);
-move(snake2);
-move(snake3);
 lengthHealth.push(createLifeImage(0,1))
 lengthHealth.push(createLifeImage(0,1))
