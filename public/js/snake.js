@@ -125,7 +125,7 @@ function createLifeImage(value, limit) {
         pathImg.width = "25";
         pathImg.style.marginRight = "5px"
         pathImg.classList.add("img-apple")
-        pathImg.src = "../../asset/images/heart.png";
+        pathImg.src = "../../public/asset/images/heart.png";
         return pathImg;
     }
 
