@@ -1,15 +1,33 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.poppins {
+    font-family: "Poppins", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.jetbrains {
+    font-family: 'JetBrains Mono', monospace, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;;
+}
+
 #snake-wrapper {
     width: 100%;
     display: flex;
+    padding-top: 1rem;
+    align-items: center;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
 }
 
 #board-wrapper {
     width: 100%;
     display: flex;
     flex-direction: column;
+}
+#life-wrapper {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
 }
 #score-board {
     width: 100%;
@@ -33,12 +51,20 @@
     flex-direction: column;
     justify-content: space-between;
 }
-#score-level-wrapper {
+#score-level-speed-wrapper {
     width: 400px;
     display: flex;
     padding-top: 1rem;
     align-items: center;
     justify-content: space-between;
+}
+#level-speed-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+#level-speed-wrapper>span {
+    margin: auto 0.5rem;
 }
 
 #indicator-2-board {
