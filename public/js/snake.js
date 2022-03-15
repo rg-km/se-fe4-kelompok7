@@ -125,7 +125,7 @@ function createLifeImage(value, limit) {
         pathImg.width = "25";
         pathImg.style.marginRight = "5px"
         pathImg.classList.add("img-apple")
-        pathImg.src = "../../public/asset/images/heart.png";
+        pathImg.src = "./asset/images/heart.png";
         return pathImg;
     }
 
@@ -178,7 +178,7 @@ function levelUp(value) {
         levelHtml.textContent = 1;
         speed(120);
         if(value.length === 5) {
-            sound("../../asset/sound/level-up.mp3") 
+            sound("./asset/sound/level-up.mp3") 
         }
         // if( snake1.position.x < 0 ) {
         //     snake1.position.x = CANVAS_SIZE / CELL_SIZE + 1;
@@ -187,7 +187,7 @@ function levelUp(value) {
         levelHtml.textContent = 2;
         speed(90);
         if(value.length === 10) {
-            sound("../../asset/sound/level-up.mp3")
+            sound("./asset/sound/level-up.mp3")
         }
         // if( snake1.position.x < 0 && snake1.position.y < 0) {
         //     snake1.position.x = CANVAS_SIZE / CELL_SIZE + 1;
@@ -197,7 +197,7 @@ function levelUp(value) {
         levelHtml.textContent = 3;
         speed(60);
         if(value.length === 15) {
-            sound("../../asset/sound/level-up.mp3")
+            sound("./asset/sound/level-up.mp3")
         }
         // if( snake1.position.x < 0 && snake1.position.y < 0 && snake.position.x >= WIDTH) {
         //     snake1.position.x = CANVAS_SIZE / CELL_SIZE + 1;
@@ -208,7 +208,7 @@ function levelUp(value) {
         levelHtml.textContent = 4;
         speed(40);
         if(value.length === 20) {
-            sound("../../asset/sound/level-up.mp3")
+            sound("./asset/sound/level-up.mp3")
         }
         // if( snake1.position.x < 0 && snake1.position.y < 0 && snake1.position.x >= WIDTH && snake1.position.y >= HEIGHT) {
         //     snake1.position.x = CANVAS_SIZE / CELL_SIZE + 1;
